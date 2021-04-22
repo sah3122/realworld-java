@@ -1,22 +1,50 @@
 package me.study.realworld.user.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import lombok.*;
+import me.study.realworld.user.vo.Email;
 
+import javax.persistence.*;
+import java.util.Base64;
+
+@EqualsAndHashCode
+@Builder
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 public class User {
     @Id
     @GeneratedValue
     private Long id;
 
-    private String email;
+    @Embedded
+    private Email email;
 
     private String token;
 
     private String username;
 
+    private String password;
+
     private String bio;
 
     private String image;
+
+    public static User of(Email email, String username, String password) {
+        return builder()
+                .email(email)
+                .username(username)
+                .password(password)
+                .build();
+    }
+
+    public User encryptPassword() {
+        this.password = new String(Base64.getEncoder().encode(password.getBytes()));
+        return this;
+    }
+
+    // TODO Email 객체가 필요한 경우의 네이밍은 어떤게 좋을까 ?
+    public String getEmail() {
+        return email.getEmail();
+    }
 }
