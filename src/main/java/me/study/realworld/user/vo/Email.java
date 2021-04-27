@@ -1,5 +1,6 @@
 package me.study.realworld.user.vo;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -10,6 +11,7 @@ import javax.persistence.UniqueConstraint;
 import java.util.regex.Pattern;
 
 @ToString
+@EqualsAndHashCode(of = "email")
 @Getter
 @Embeddable
 public class Email {
