@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.stereotype.Repository;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import static me.study.realworld.user.domain.QUser.user;
 
@@ -24,5 +25,11 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
                                    .limit(1)
                                    .fetchOne();
         return Objects.nonNull(user);
+    }
+
+    public Optional<User> findByUsernameAndPassword(String username, String purePassword) {
+        return Optional.ofNullable(jpaQueryFactory.selectFrom(user)
+                                          .where(user.username.eq(username).and(user.password.eq(purePassword)))
+                                          .fetchOne());
     }
 }

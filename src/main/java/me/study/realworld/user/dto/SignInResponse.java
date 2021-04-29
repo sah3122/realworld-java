@@ -7,12 +7,12 @@ import me.study.realworld.user.domain.User;
 
 @Getter
 @AllArgsConstructor
-public class UserResponse {
+public class SignInResponse {
 
     @JsonProperty("user")
     private UserDto userDto;
 
-    public UserResponse(User user) {
+    public SignInResponse(User user) {
         userDto = new UserDto(user);
     }
 }

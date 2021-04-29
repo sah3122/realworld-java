@@ -2,6 +2,7 @@ package me.study.realworld.user.domain;
 
 import lombok.*;
 import me.study.realworld.user.vo.Email;
+import me.study.realworld.util.PasswordUtils;
 
 import javax.persistence.*;
 import java.util.Base64;
@@ -39,7 +40,7 @@ public class User {
     }
 
     public User encryptPassword() {
-        this.password = new String(Base64.getEncoder().encode(password.getBytes()));
+        this.password = PasswordUtils.encrypt(password);
         return this;
     }
 
