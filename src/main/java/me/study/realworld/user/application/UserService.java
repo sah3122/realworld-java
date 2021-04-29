@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.study.realworld.user.domain.User;
 import me.study.realworld.user.domain.UserQueryRepository;
 import me.study.realworld.user.domain.UserRepository;
-import me.study.realworld.user.dto.SignInRequest.UserRequest;
+import me.study.realworld.user.dto.SignInRequest.SignInDto;
 import me.study.realworld.user.dto.UserResponse;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +14,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserQueryRepository userQueryRepository;
 
-    public UserResponse signIn(UserRequest userRequest) {
-        User user = userRequest.toEntity()
-                               .encryptPassword();
+    public UserResponse signIn(SignInDto signInDto) {
+        User user = signInDto.toEntity()
+                             .encryptPassword();
 
         if (userQueryRepository.existsByEmail(user.getEmail())) {
             throw new IllegalArgumentException("이메일을 사용중입니다.");

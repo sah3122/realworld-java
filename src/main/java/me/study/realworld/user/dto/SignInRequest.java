@@ -13,12 +13,12 @@ import me.study.realworld.user.vo.Email;
 @ToString
 public class SignInRequest {
     @JsonProperty("user")
-    private UserRequest userRequest;
+    private SignInDto signInDto;
 
     @Getter
     @ToString
     @NoArgsConstructor
-    public class UserRequest {
+    public class SignInDto {
         private Email email;
 
         private String username;
