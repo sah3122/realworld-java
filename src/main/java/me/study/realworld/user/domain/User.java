@@ -1,6 +1,7 @@
 package me.study.realworld.user.domain;
 
 import lombok.*;
+import me.study.realworld.common.domain.BaseEntity;
 import me.study.realworld.user.vo.Email;
 import me.study.realworld.util.PasswordUtils;
 
@@ -13,7 +14,7 @@ import java.util.Base64;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
-public class User {
+public class User extends BaseEntity<User> {
     @Id
     @GeneratedValue
     private Long id;

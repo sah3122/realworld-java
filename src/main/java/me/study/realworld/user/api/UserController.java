@@ -3,6 +3,7 @@ package me.study.realworld.user.api;
 import lombok.RequiredArgsConstructor;
 import me.study.realworld.user.application.UserService;
 import me.study.realworld.user.dto.LoginRequest;
+import me.study.realworld.user.dto.LoginResponse;
 import me.study.realworld.user.dto.SignInRequest;
 import me.study.realworld.user.dto.SignInResponse;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public void login(@RequestBody LoginRequest loginRequest) {
-        userService.login(loginRequest);
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok(userService.login(loginRequest));
     }
 }

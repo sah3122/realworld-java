@@ -1,17 +1,20 @@
 package me.study.realworld.user.application;
 
 import lombok.RequiredArgsConstructor;
-import me.study.realworld.user.domain.NotFoundException;
+import lombok.extern.slf4j.Slf4j;
+import me.study.realworld.user.domain.exception.UserNotFoundException;
 import me.study.realworld.user.domain.User;
 import me.study.realworld.user.domain.UserQueryRepository;
 import me.study.realworld.user.domain.UserRepository;
 import me.study.realworld.user.dto.LoginRequest;
 import me.study.realworld.user.dto.LoginRequest.LoginDto;
+import me.study.realworld.user.dto.LoginResponse;
 import me.study.realworld.user.dto.SignInRequest.SignInDto;
 import me.study.realworld.user.dto.SignInResponse;
 import me.study.realworld.util.PasswordUtils;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -30,11 +33,12 @@ public class UserService {
         return new SignInResponse(savedUser);
     }
 
-    public void login(LoginRequest loginRequest) {
+    public LoginResponse login(LoginRequest loginRequest) {
         LoginDto loginDto = loginRequest.getLoginDto();
-
-        String purePassword = PasswordUtils.decrypt(loginDto.getPassword());
-        User user = userQueryRepository.findByUsernameAndPassword(loginDto.getUsername(), purePassword)
-                                       .orElseThrow(() -> new NotFoundException());
+        String purePassword = PasswordUtils.encrypt(loginDto.getPassword());
+        log.info("{}", purePassword);
+        return userQueryRepository.findByUsernameAndPassword(loginDto.getUsername(), purePassword)
+                                  .map(LoginResponse::new)
+                                  .orElseThrow(() -> new UserNotFoundException("로그인 정보가 정확하지 않습니다."));
     }
 }
