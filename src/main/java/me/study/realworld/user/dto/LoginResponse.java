@@ -11,7 +11,8 @@ public class LoginResponse {
     @JsonProperty("user")
     private UserDto userDto;
 
-    public LoginResponse(User user) {
-        userDto = new UserDto(user);
+    public LoginResponse(User user, String token) {
+        userDto = new UserDto(user, token);
     }
+
 }

@@ -19,4 +19,9 @@ public class UserDto {
         this.email = user.getEmail();
         this.username = user.getUsername();
     }
+
+    public UserDto(User user, String token) {
+        this(user);
+        this.token = token;
+    }
 }
