@@ -12,7 +12,7 @@ import me.study.realworld.user.dto.LoginResponse;
 import me.study.realworld.user.dto.SignInRequest.SignInDto;
 import me.study.realworld.user.dto.SignInResponse;
 import me.study.realworld.util.PasswordUtils;
-import me.study.realworld.util.jwt.JsonWebToken;
+import me.study.realworld.util.jwt.JwtUtils;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -38,7 +38,7 @@ public class UserService {
         LoginDto loginDto = loginRequest.getLoginDto();
         String purePassword = PasswordUtils.encrypt(loginDto.getPassword());
         return userQueryRepository.findByUsernameAndPassword(loginDto.getUsername(), purePassword)
-                                  .map((user) -> new LoginResponse(user, JsonWebToken.createToken("")))
+                                  .map((user) -> new LoginResponse(user, JwtUtils.createToken("")))
                                   .orElseThrow(() -> new UserNotFoundException("로그인 정보가 정확하지 않습니다."));
     }
 }
