@@ -1,4 +1,4 @@
-package me.study.realworld.config;
+package me.study.realworld.authentication;
 
 import me.study.realworld.common.exception.UnauthorizedException;
 import me.study.realworld.util.jwt.JwtUtils;
@@ -7,6 +7,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
@@ -15,8 +16,8 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (!StringUtils.hasText(authorization)) {
             throw new UnauthorizedException();
         }
-        JwtUtils.verify(authorization);
-        // TODO User 정보를 ThreadLocal에 저장
+        Map<String, Object> authentication = JwtUtils.verify(authorization);
+        AuthenticationThreadLocal.set(authentication);
         return true;
     }
 }
